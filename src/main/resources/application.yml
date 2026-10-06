@@ -1,6 +1,8 @@
 spring:
   application:
     name: shop
+  config:
+    import: optional:file:.env[.properties]
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/shop}
     username: ${DB_USER:shop}
@@ -11,3 +13,48 @@ spring:
       ddl-auto: validate
   flyway:
     enabled: true
+  task:
+    scheduling:
+      pool:
+        size: 5
+  cache:
+    caffeine:
+      spec: maximumSize=10000,expireAfterWrite=10m,recordStats
+  modulith:
+    events:
+      jdbc:
+        schema-initialization:
+          enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus,caches,info
+  endpoint:
+    health:
+      show-details: when_authorized
+  metrics:
+    enable:
+      cache: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    access-ttl: 15m
+    refresh-ttl: 14d
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    try-it-out-enabled: true
+    persist-authorization: true
+
+logging:
+  level:
+    root: INFO
+    com.example.shop: INFO
