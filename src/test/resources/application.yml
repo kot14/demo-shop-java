@@ -1,0 +1,7 @@
+app:
+  jwt:
+    secret: noDmF8DmmOMaes6zjFiYB8KTUU/KgbyPm04pXrtsxdo=
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
